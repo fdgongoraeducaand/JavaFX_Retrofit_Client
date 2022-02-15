@@ -106,8 +106,6 @@ public class ProductosController {
 
     }
     private void cargarDatosTabla () {
-        // datos = productDAO.obtenerProductos();
-
 
         tcProductCode.setCellValueFactory(new PropertyValueFactory<Producto, String>("productCode"));
         tcProductDescription.setCellValueFactory(new PropertyValueFactory<Producto, String>("productDescription"));
@@ -120,8 +118,9 @@ public class ProductosController {
         tcMSRP.setCellValueFactory(new PropertyValueFactory<Producto, Double>("MSRP"));
         tcQuantityInStock.setCellValueFactory(new PropertyValueFactory<Producto, Integer>("quantityInStock"));
 
-        if (datos != null)
-        tvProductos.setItems(datos);
+        if (datos != null) {
+            tvProductos.setItems(datos);
+        }
     }
 
     private void realizarBindingsProductoAux ( Producto producto) {
