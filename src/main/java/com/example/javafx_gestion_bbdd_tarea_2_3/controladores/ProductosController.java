@@ -4,20 +4,16 @@ import com.example.javafx_gestion_bbdd_tarea_2_3.dao.APIClient;
 import com.example.javafx_gestion_bbdd_tarea_2_3.dao.ProductoDAO;
 import com.example.javafx_gestion_bbdd_tarea_2_3.interfaces.ProductoInterface;
 import com.example.javafx_gestion_bbdd_tarea_2_3.modelos.Producto;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.NumberStringConverter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProductosController {
@@ -73,7 +69,6 @@ public class ProductosController {
 
     public void initialize()  {
         obtenerDatosRest();
-        cargarDatosTabla();
         productoAux = new Producto("","","",
                 "","","",0,0d,0d);
         realizarBindingsProductoAux(productoAux);
@@ -83,7 +78,7 @@ public class ProductosController {
     private void obtenerDatosRest() {
         ProductoInterface apiService = APIClient.getClient().create(ProductoInterface.class);
 
-        Call<ObservableList<Producto>> call = apiService.listProductos();
+        Call<ObservableList<Producto>> call = apiService.cargarProductos();
         call.enqueue(new Callback<ObservableList<Producto>>() {
 
             @Override
@@ -94,7 +89,8 @@ public class ProductosController {
                    // datosaux.forEach(prod -> datos.add(prod));
                     cargarDatosTabla();
                 } else {
-                    System.out.println(response.errorBody());
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "No se ha podido conectar con el servidor. Inténtelo más tarde. ", ButtonType.OK );
+                    alert.showAndWait();
                 }
             }
 
@@ -105,6 +101,31 @@ public class ProductosController {
         });
 
     }
+
+    private void borrarProductoRest(String codProducto) {
+        ProductoInterface apiService = APIClient.getClient().create(ProductoInterface.class);
+
+        Call<Response> call = apiService.borrarProducto(codProducto);
+        call.enqueue(new Callback<Response>() {
+
+            @Override
+            public void onResponse(Call<Response> call, Response<Response> response) {
+                if(response.isSuccessful()) {
+                   obtenerDatosRest();
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "No se ha podido borrar el producto. ", ButtonType.OK );
+                    alert.showAndWait();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Response> call, Throwable throwable) {
+                throwable.printStackTrace();
+            }
+        });
+
+    }
+
     private void cargarDatosTabla () {
 
         tcProductCode.setCellValueFactory(new PropertyValueFactory<Producto, String>("productCode"));
@@ -206,13 +227,7 @@ public class ProductosController {
             alert.showAndWait();
             if (alert.getResult() == ButtonType.YES) {
 
-                if (productDAO.borrarProducto(productoAux)) {
-                    cargarDatosTabla();
-                } else {
-                    alert = new Alert(Alert.AlertType.INFORMATION, "No se ha encontrado un producto con el código '"
-                            + productoAux.getProductCode() + "' .", ButtonType.OK );
-                    alert.showAndWait();
-                }
+                borrarProductoRest(productoAux.getProductCode());
             }
         }
         else {

@@ -35,7 +35,7 @@ public class ProductoDAORest implements Callback<ObservableList<Producto>>  {
 
         ProductoInterface productosAPI = retrofit.create(ProductoInterface.class);
 
-        Call<ObservableList<Producto>> call = productosAPI.listProductos();
+        Call<ObservableList<Producto>> call = productosAPI.cargarProductos();
         call.enqueue(this);
 
     }
