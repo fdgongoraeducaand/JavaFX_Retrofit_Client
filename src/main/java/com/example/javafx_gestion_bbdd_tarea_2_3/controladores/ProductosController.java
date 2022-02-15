@@ -1,16 +1,24 @@
 package com.example.javafx_gestion_bbdd_tarea_2_3.controladores;
 
+import com.example.javafx_gestion_bbdd_tarea_2_3.dao.APIClient;
 import com.example.javafx_gestion_bbdd_tarea_2_3.dao.ProductoDAO;
+import com.example.javafx_gestion_bbdd_tarea_2_3.interfaces.ProductoInterface;
 import com.example.javafx_gestion_bbdd_tarea_2_3.modelos.Producto;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.NumberStringConverter;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductosController {
 
@@ -64,7 +72,7 @@ public class ProductosController {
     private TableColumn tcProductCode;
 
     public void initialize()  {
-
+        obtenerDatosRest();
         cargarDatosTabla();
         productoAux = new Producto("","","",
                 "","","",0,0d,0d);
@@ -72,8 +80,34 @@ public class ProductosController {
         cargarGestorDobleCLick();
     }
 
+    private void obtenerDatosRest() {
+        ProductoInterface apiService = APIClient.getClient().create(ProductoInterface.class);
+
+        Call<ObservableList<Producto>> call = apiService.listProductos();
+        call.enqueue(new Callback<ObservableList<Producto>>() {
+
+            @Override
+            public void onResponse(Call<ObservableList<Producto>> call, Response<ObservableList<Producto>> response) {
+                if(response.isSuccessful()) {
+                    List<Producto> datosaux = response.body();
+                    datos = FXCollections.observableList(datosaux);
+                   // datosaux.forEach(prod -> datos.add(prod));
+                    cargarDatosTabla();
+                } else {
+                    System.out.println(response.errorBody());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ObservableList<Producto>> call, Throwable throwable) {
+                throwable.printStackTrace();
+            }
+        });
+
+    }
     private void cargarDatosTabla () {
-        datos = productDAO.obtenerProductos();
+        // datos = productDAO.obtenerProductos();
+
 
         tcProductCode.setCellValueFactory(new PropertyValueFactory<Producto, String>("productCode"));
         tcProductDescription.setCellValueFactory(new PropertyValueFactory<Producto, String>("productDescription"));
@@ -86,6 +120,7 @@ public class ProductosController {
         tcMSRP.setCellValueFactory(new PropertyValueFactory<Producto, Double>("MSRP"));
         tcQuantityInStock.setCellValueFactory(new PropertyValueFactory<Producto, Integer>("quantityInStock"));
 
+        if (datos != null)
         tvProductos.setItems(datos);
     }
 

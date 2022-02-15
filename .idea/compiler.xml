@@ -6,11 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="JavaFX_Gestion_BBDD_Tarea_2_3" />
+        <module name="JavaFX_Retrofit_Client" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="JavaFX_Gestion_BBDD_Tarea_2_3" target="16" />
+      <module name="JavaFX_Retrofit_Client" target="16" />
     </bytecodeTargetLevel>
   </component>
 </project>
