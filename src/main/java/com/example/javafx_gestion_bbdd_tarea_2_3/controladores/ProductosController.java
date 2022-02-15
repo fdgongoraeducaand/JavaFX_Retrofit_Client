@@ -105,21 +105,45 @@ public class ProductosController {
     private void borrarProductoRest(String codProducto) {
         ProductoInterface apiService = APIClient.getClient().create(ProductoInterface.class);
 
-        Call<Response> call = apiService.borrarProducto(codProducto);
-        call.enqueue(new Callback<Response>() {
+        Call<Void> call = apiService.borrarProducto(codProducto);
+        call.enqueue(new Callback<Void>() {
 
             @Override
-            public void onResponse(Call<Response> call, Response<Response> response) {
+            public void onResponse(Call<Void> call, Response<Void> response) {
                 if(response.isSuccessful()) {
                    obtenerDatosRest();
                 } else {
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "No se ha podido borrar el producto. ", ButtonType.OK );
-                    alert.showAndWait();
+                  //  Alert alert = new Alert(Alert.AlertType.ERROR, "No se ha podido borrar el producto. ", ButtonType.OK );
+                  //  alert.showAndWait();
                 }
             }
 
             @Override
-            public void onFailure(Call<Response> call, Throwable throwable) {
+            public void onFailure(Call<Void> call, Throwable throwable) {
+                throwable.printStackTrace();
+            }
+        });
+
+    }
+
+    private void anadirProductoRest(Producto pro) {
+        ProductoInterface apiService = APIClient.getClient().create(ProductoInterface.class);
+
+        Call<Void> call = apiService.altaProducto(productoAux);
+        call.enqueue(new Callback<Void>() {
+
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.isSuccessful()) {
+                    obtenerDatosRest();
+                } else {
+                    //  Alert alert = new Alert(Alert.AlertType.ERROR, "No se ha podido borrar el producto. ", ButtonType.OK );
+                    //  alert.showAndWait();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable throwable) {
                 throwable.printStackTrace();
             }
         });
@@ -202,9 +226,8 @@ public class ProductosController {
     @javafx.fxml.FXML
     public void onAltaClicked(ActionEvent actionEvent) {
         if ( ! productoAux.getProductCode().trim().equals("")) {
-            if (productDAO.altaProducto(productoAux)) {
-                cargarDatosTabla();
-            }
+            anadirProductoRest(productoAux);
+
         }
         else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Debe introducir un código de producto.", ButtonType.OK );

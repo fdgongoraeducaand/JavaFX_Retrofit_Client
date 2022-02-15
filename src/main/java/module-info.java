@@ -5,6 +5,8 @@ module com.example.javafx_gestion_bbdd_tarea_2_3 {
     requires retrofit2;
     requires gson;
     requires retrofit2.converter.gson;
+    requires javafx.base;
+
 
 
     opens com.example.javafx_gestion_bbdd_tarea_2_3 to javafx.fxml;
@@ -18,5 +20,7 @@ module com.example.javafx_gestion_bbdd_tarea_2_3 {
 
     opens com.example.javafx_gestion_bbdd_tarea_2_3.interfaces to javafx.fxml;
     exports com.example.javafx_gestion_bbdd_tarea_2_3.interfaces;
+
+
 
 }

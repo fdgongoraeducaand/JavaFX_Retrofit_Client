@@ -1,17 +1,29 @@
 package com.example.javafx_gestion_bbdd_tarea_2_3.modelos;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import javafx.beans.property.*;
 
 public class Producto {
 
+  @SerializedName("id")
+  @Expose
   private final StringProperty productCode;
+  @Expose
   private final StringProperty productName;
+  @Expose
   private final StringProperty productLine;
+  @Expose
   private final StringProperty productScale;
+  @Expose
   private final StringProperty productVendor;
+  @Expose
   private final StringProperty productDescription;
+  @Expose
   private final IntegerProperty quantityInStock;
+  @Expose
   private final DoubleProperty buyPrice;
+  @Expose
   private final DoubleProperty MSRP;
 
   public Producto(String productCode, String productName, String productLine, String productScale,
