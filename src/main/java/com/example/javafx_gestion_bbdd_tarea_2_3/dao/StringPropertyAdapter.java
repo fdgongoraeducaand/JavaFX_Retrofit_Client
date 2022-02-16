@@ -15,7 +15,9 @@ public class StringPropertyAdapter implements
             Type type,
             JsonSerializationContext jsonSerializationContext
     ) {
+        System.out.println(property.toString());
         return new JsonPrimitive(
+
                 property.getValue()
         );
     }
@@ -26,6 +28,7 @@ public class StringPropertyAdapter implements
             Type type,
             JsonDeserializationContext jsonDeserializationContext
     ) throws JsonParseException {
+      //  System.out.println(json.toString());
         return new SimpleStringProperty(
                 json.getAsJsonPrimitive().getAsString()
         );

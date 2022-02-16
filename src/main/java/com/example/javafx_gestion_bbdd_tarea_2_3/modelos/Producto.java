@@ -1,30 +1,43 @@
 package com.example.javafx_gestion_bbdd_tarea_2_3.modelos;
 
+import com.example.javafx_gestion_bbdd_tarea_2_3.dao.DoublePropertyAdapter;
+import com.example.javafx_gestion_bbdd_tarea_2_3.dao.IntegerPropertyAdapter;
+import com.example.javafx_gestion_bbdd_tarea_2_3.dao.StringPropertyAdapter;
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import javafx.beans.property.*;
 
 public class Producto {
 
   @SerializedName("id")
+  @JsonAdapter(StringPropertyAdapter.class)
   @Expose
-  private final StringProperty productCode;
+  public final StringProperty productCode;
   @Expose
-  private final StringProperty productName;
+  @JsonAdapter(StringPropertyAdapter.class)
+  public final StringProperty productName;
   @Expose
-  private final StringProperty productLine;
+  @JsonAdapter(StringPropertyAdapter.class)
+  public final StringProperty productLine;
   @Expose
-  private final StringProperty productScale;
+  @JsonAdapter(StringPropertyAdapter.class)
+  public final StringProperty productScale;
   @Expose
-  private final StringProperty productVendor;
+  @JsonAdapter(StringPropertyAdapter.class)
+  public final StringProperty productVendor;
   @Expose
-  private final StringProperty productDescription;
+  @JsonAdapter(StringPropertyAdapter.class)
+  public final StringProperty productDescription;
   @Expose
-  private final IntegerProperty quantityInStock;
+  @JsonAdapter(IntegerPropertyAdapter.class)
+  public final IntegerProperty quantityInStock;
   @Expose
-  private final DoubleProperty buyPrice;
+  @JsonAdapter(DoublePropertyAdapter.class)
+  public final DoubleProperty buyPrice;
   @Expose
-  private final DoubleProperty MSRP;
+  @JsonAdapter(DoublePropertyAdapter.class)
+  public final DoubleProperty MSRP;
 
   public Producto(String productCode, String productName, String productLine, String productScale,
                   String productVendor, String productDescription, Integer quantityInStock, Double buyPrice,
