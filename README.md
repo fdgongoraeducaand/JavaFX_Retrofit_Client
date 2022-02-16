@@ -10,7 +10,7 @@ El programa permite realizar las operaciones CRUD en la entidad productos de una
 4. Retrofit2
 
 El servicio REST API se debe ejecutar previamente mediante un contenedor al que se le pasa el fichero json con las entidades. 
-En nuestro caso el fichero es **productos.json** y se encuentra en la carpeta raíz.
+En nuestro caso el fichero es **productos.json** y se encuentra en la carpeta raíz del repositorio.
 
 El comando para ejecutar el contenedor es el siguiente:
 
