@@ -150,6 +150,30 @@ public class ProductosController {
 
     }
 
+    private void actualizarProductoRest(Producto pro) {
+        ProductoInterface apiService = APIClient.getClient().create(ProductoInterface.class);
+
+        Call<Void> call = apiService.actualizarProducto( productoAux.getProductCode() , productoAux);
+        call.enqueue(new Callback<Void>() {
+
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.isSuccessful()) {
+                    obtenerDatosRest();
+                } else {
+                    //  Alert alert = new Alert(Alert.AlertType.ERROR, "No se ha podido borrar el producto. ", ButtonType.OK );
+                    //  alert.showAndWait();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable throwable) {
+                throwable.printStackTrace();
+            }
+        });
+
+    }
+
     private void cargarDatosTabla () {
 
         tcProductCode.setCellValueFactory(new PropertyValueFactory<Producto, String>("productCode"));
@@ -206,13 +230,14 @@ public class ProductosController {
     public void onActualizarClicked(ActionEvent actionEvent) {
 
         if ( ! productoAux.getProductCode().trim().equals("")) {
-            if (productDAO.actualizarProducto(productoAux)) {
-                cargarDatosTabla();
-            } else {
+            actualizarProductoRest(productoAux);
+          /*  } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "No se ha encontrado un producto con el código '"
                          + productoAux.getProductCode() + "' .", ButtonType.OK );
                 alert.showAndWait();
             }
+            */
+
         }
         else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Debe indicar el código del producto a actualizar.", ButtonType.OK );

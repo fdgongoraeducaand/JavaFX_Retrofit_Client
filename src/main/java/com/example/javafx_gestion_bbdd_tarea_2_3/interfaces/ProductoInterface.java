@@ -16,4 +16,7 @@ public interface ProductoInterface {
 
     @POST("productos")
     Call<Void> altaProducto(@Body Producto product);
+
+    @PUT("productos/{productCode}")
+    Call<Void> actualizarProducto (@Path("productCode") String productCode, @Body Producto product);
 }
