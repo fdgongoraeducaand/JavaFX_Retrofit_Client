@@ -15,7 +15,7 @@ public class HelloApplication extends Application {
      //   control.start();
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("productos-vista.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1200, 1000);
-        stage.setTitle("Hello!");
+        stage.setTitle("Gestión de productos de la tienda mediante REST API.");
         stage.setScene(scene);
         stage.show();
     }

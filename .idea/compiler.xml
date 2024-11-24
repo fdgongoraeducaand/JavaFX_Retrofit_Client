@@ -6,7 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="JavaFX_Retrofit_Client" />
+        <module name="JavaFX_Gestion_BBDD_Tarea_2_3" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
